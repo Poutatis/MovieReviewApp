@@ -8,8 +8,8 @@ export default function WelcomeScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Welcome to Your Movie App!</Text>
-      <Button title="Get Started" onPress={goToSearch} />
+      <Text>Welcome to the Movie Review App</Text>
+      <Button title="Movie Search" onPress={goToSearch} />
     </View>
   );
 }
