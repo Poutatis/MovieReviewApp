@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, Button, StyleSheet } from "react-native";
+import { View, TextInput, Text, Button, StyleSheet, Alert } from "react-native";
 
 const ReviewInput = ({ onAddReview }) => {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
 
   const handleAddReview = () => {
-    if (review.trim() === "" || rating.trim() === "") {
+    if (review.trim() === "") {
       return;
     }
+
+    const num = parseInt(rating, 10);
+    if (isNaN(num) || num < 1 || num > 10) {
+      Alert.alert("Invalid Rating", "Rating must be between 1 and 10.");
+      return;
+    }
+
     onAddReview({ review, rating });
     setReview("");
     setRating("");
-  };
-
-  const validateRating = (text) => {
-    const num = parseInt(text, 10);
-    if (num >= 1 && num <= 10) {
-      setRating(text);
-    }
   };
 
   return (
@@ -38,7 +38,7 @@ const ReviewInput = ({ onAddReview }) => {
           maxLength={2}
           placeholder="1-10"
           value={rating}
-          onChangeText={(text) => validateRating(text)}
+          onChangeText={(text) => setRating(text)}
         />
       </View>
       <Button title="Add Review" onPress={handleAddReview} />
