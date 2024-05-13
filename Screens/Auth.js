@@ -1,5 +1,6 @@
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
+import { getDatabase } from '@firebase/database';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
@@ -15,6 +16,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+export const database = getDatabase(app);
 
 const AuthScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -72,7 +74,7 @@ const AuthScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   authContainer: {
-    width: '80%',
+    width: '100%',
     maxWidth: 400,
     backgroundColor: '#fff',
     padding: 16,

@@ -1,46 +1,82 @@
-import React, { useContext } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { getAuth } from '@firebase/auth';
+import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useContext, useState } from "react";
+import { Text, View, Image, FlatList, StyleSheet, ScrollView } from "react-native";
 
 import ReviewsContext from "../Context/ReviewsContext";
 
 export default function Reviews() {
-  const { reviewsList } = useContext(ReviewsContext);
+  const { reviewsList, setReviewsList } = useContext(ReviewsContext);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const db = getDatabase();
+    const user = auth.currentUser;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+    const reviewsRef = ref(db, `users/${user.uid}/reviews`);
+    const unsubscribe = onValue(reviewsRef, (snapshot) => {
+      const reviews = [];
+      snapshot.forEach((childSnapshot) => {
+        reviews.push(childSnapshot.val());
+      });
+      setReviewsList(reviews);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [auth, setReviewsList]);
+
+  if (loading) {
+    return <Text>Loading reviews...</Text>;
+  }
+
+const renderItem = ({ item }) => (
+  <ScrollView>
+  <View style={styles.reviewItem}>
+    <Image source={{ uri: item.poster }} style={styles.reviewPoster} />
+    <View style={styles.reviewDetails}>
+      <Text>
+        <Text style={styles.boldText}>Title: </Text>
+        {item.title}
+      </Text>
+      <Text>
+        <Text style={styles.boldText}>Release Date: </Text>
+        {item.releaseDate}
+      </Text>
+      <Text>
+        <Text style={styles.boldText}>Review: </Text>
+        {item.review}
+      </Text>
+      <Text>
+        <Text style={styles.boldText}>Rating: </Text>
+        {item.rating}
+      </Text>
+    </View>
+  </View>
+  </ScrollView>
+);
+
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Reviews List</Text>
-        {reviewsList.map((item, index) => (
-          <View key={index} style={styles.reviewItem}>
-            <Image source={{ uri: item.poster }} style={styles.reviewPoster} />
-            <View style={styles.reviewDetails}>
-              <Text>{item.title}</Text>
-              <Text>{item.releaseDate}</Text>
-              <Text>Review: {item.review}</Text>
-              <Text>Rating: {item.rating}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      data={reviewsList}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
   reviewItem: {
     flexDirection: "row",
     marginBottom: 20,
+    paddingHorizontal: 20,
   },
   reviewPoster: {
     width: 80,
@@ -49,5 +85,8 @@ const styles = StyleSheet.create({
   },
   reviewDetails: {
     flex: 1,
+  },
+  boldText: {
+    fontWeight: 'bold',
   },
 });

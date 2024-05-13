@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React from 'react';
 
-import AuthScreen from "./Auth";
 import { ReviewsProvider } from "./Context/ReviewsContext";
+import AuthScreen from "./Screens/Auth";
 import MovieDetails from "./Screens/MovieDetails";
 import Reviews from "./Screens/Reviews";
 import Search from "./Screens/Search";
