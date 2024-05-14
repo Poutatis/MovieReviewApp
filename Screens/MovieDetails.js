@@ -1,7 +1,16 @@
-import { getAuth } from '@firebase/auth';
-import { set, ref, getDatabase } from '@firebase/database';
+import { getAuth } from "@firebase/auth";
+import { set, ref, getDatabase } from "@firebase/database";
 import { useContext } from "react";
-import { StyleSheet, View, Text, Image, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Alert,
+} from "react-native";
 
 import ReviewInput from "../Component/ReviewInput";
 import ReviewsContext from "../Context/ReviewsContext";
@@ -18,7 +27,7 @@ export default function MovieDetailsScreen({ route }) {
       console.error("User is not authenticated");
       return;
     }
-    
+
     const newReview = {
       poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
       title: movie.title,
@@ -29,11 +38,11 @@ export default function MovieDetailsScreen({ route }) {
 
     set(ref(database, `users/${user.uid}/reviews/${movie.id}`), newReview)
       .then(() => {
-        console.log("Review added successfully");
+        Alert.alert("Review added successfully");
         setReviewsList((prevReviews) => [...prevReviews, newReview]);
       })
       .catch((error) => {
-        console.error("Error saving review to Firebase:", error);
+        Alert.alert("Error saving review to Firebase:", error);
       });
   };
 
