@@ -6,7 +6,7 @@ This is a react native application which lets you review and rate movies on Andr
 ## Application Functions
 
 - Application has 5 "screens".
-  - First page is used for authentication with email/password login and a "Need an account? Sign Up"
+  - First page is used for authentication with email/password login and a "Need an account? Sign Up" button which changes sign in button to sign up which lets you create an account.
 - After logging in you are greeted by a welcome page with 2 buttons.
 - Movie Search which takes you to a page with a search bar where you can input a movie name to find movies.
   - When you have searhced for a movie and click on it, it takes you to a page with details about the movie. There is also a text input where you can type a review and a rating field where u can rate the movie 1-10, after reviewing and rating the movie you can click the "Add Review" button which saves your review and puts it in a list which can be found on the Review List page.
