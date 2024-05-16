@@ -1,22 +1,24 @@
 # Movie Review App
 
-Detta är en react native applikation som använder sig av [TMdb API](https://developer.themoviedb.org/docs/getting-started) för att fetcha filmer och detaljer om dem. För authentikation och datalagring används [Google Firebase](https://firebase.google.com/) authentication och realtime database.
+This is a react native application which lets you review and rate movies on Android or IOS. The application uses [TMdb API](https://developer.themoviedb.org/docs/getting-started) to fetch movie details. For authentication and storage I have used [Google Firebase](https://firebase.google.com/) authentication and realtime database.
 
-## Projekt struktur
 
-## Applikationens funktionalitet
+## Application Functions
 
-- Applikationen består av 5 sidor.
-- En Authentikations sida med email/password login och en "Need an account? Sign Up" knapp där man kan skapa konto.
-- Efter inlogging kommer man till en välkomst sida med 2 knappar.
-- Movie Search tar dig till en sida med ett sökfält där du kan leta upp filmer.
-  - När du klickar på en film så kommer du till en sida med detaljer om filmen. Det finns ett textfält där du kan skriva en review av filmen och ett annat textfält där du kan fylla i hur bra du tyckte filmen var (1-10) samt en "Add Review" knapp som sparar din review till en lista.
-- Välkomst sidans andra knapp tar dig till din Review List där du ser filmer du har reviewat, poster, film title, release date, review och rating.
+- Application has 5 "screens".
+- - First page is used for authentication with email/password login and a "Need an account? Sign Up"
+- After logging in you are greeted by a welcome page with 2 buttons.
+- Movie Search which takes you to a page with a search bar where you can input a movie name to find movies.
+  - When you have searhced for a movie and click on it, it takes you to a page with details about the movie. There is also a text input where you can type a review and a rating field where u can rate the movie 1-10, after reviewing and rating the movie you can click the "Add Review" button which saves your review and puts it in a list which can be found on the Review List page.
+- The other button the the welcome screen takes you to your Review List where you can find movies that you have reviewed, the poster, title, release date and your review + rating.
+
+## Limitations
+
+If I had more time I would have liked to have added a feature which lets you see other peoples review lists.
 
 ## Program start
 
-För att starta programmet först klona repositoriet.
-
-1. I root mappen öppan terminalen och kör `npm install`.
-2. Kör `npx expo start` för att starta applikationen.
-3. Skanna QR koden men din telefon för att kunna använda applikationen.
+To start the program you download or clone the repository.
+1. In the root map open the terminal and type `npm install`.
+2. `npx expo start` to start the application.
+3. Scan the QR code with your phone to be able to use the application.
