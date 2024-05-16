@@ -8,6 +8,7 @@ import { getDatabase } from "@firebase/database";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDUnL7UdtUF8FFmuvxaR6biAa8ZcHPWAUU",
   authDomain: "moviereviewapp-84a73.firebaseapp.com",
@@ -20,14 +21,18 @@ const firebaseConfig = {
   measurementId: "G-BMC4MJSPZQ",
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
+// Get database instance
 export const database = getDatabase(app);
 
 const AuthScreen = ({ navigation }) => {
+  // State for email, password, and login status
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
+  // Firebase authentication instance
   const auth = getAuth(app);
 
   const handleAuthentication = async () => {
@@ -71,7 +76,6 @@ const AuthScreen = ({ navigation }) => {
           color="#3498db"
         />
       </View>
-
       <View style={styles.bottomContainer}>
         <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
           {isLogin

@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { View, TextInput, Text, Button, StyleSheet, Alert } from "react-native";
 
 const ReviewInput = ({ onAddReview }) => {
+  // State for review text and rating
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
 
   const handleAddReview = () => {
+    // Check if review text is empty
     if (review.trim() === "") {
       return;
     }
-
+    // Convert rating to number and validate
     const num = parseInt(rating, 10);
     if (isNaN(num) || num < 1 || num > 10) {
       Alert.alert("Invalid Rating", "Rating must be between 1 and 10.");
@@ -17,6 +19,7 @@ const ReviewInput = ({ onAddReview }) => {
     }
 
     onAddReview({ review, rating });
+    // Clear review text and rating
     setReview("");
     setRating("");
   };

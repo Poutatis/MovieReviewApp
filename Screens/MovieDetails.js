@@ -16,18 +16,24 @@ import ReviewInput from "../Component/ReviewInput";
 import ReviewsContext from "../Context/ReviewsContext";
 
 export default function MovieDetailsScreen({ route }) {
+  // Extract movie from route parameters
   const { movie } = route.params;
+  // Get reviews list and setter function from ReviewsContext
   const { setReviewsList } = useContext(ReviewsContext);
   const database = getDatabase();
   const auth = getAuth();
 
+  // Function to handle adding a review
   const handleAddReview = ({ review, rating }) => {
+    // Get current user
     const user = auth.currentUser;
+    // If user is not authenticated, log error and return
     if (!user) {
       console.error("User is not authenticated");
       return;
     }
 
+    // Create new review object
     const newReview = {
       poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
       title: movie.title,
@@ -36,6 +42,7 @@ export default function MovieDetailsScreen({ route }) {
       rating,
     };
 
+    // Set review in database
     set(ref(database, `users/${user.uid}/reviews/${movie.id}`), newReview)
       .then(() => {
         Alert.alert("Review added successfully");

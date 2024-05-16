@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button, ScrollView } from "react-native";
 import { ListItem } from "react-native-elements";
 
+// TMdb API key and search URL for movie search
 const API_KEY = "d6d860e77e44c8a98c934aaf14e4942b";
 const SEARCH_URL = "https://api.themoviedb.org/3/search/movie";
 
 export default function Search() {
+  // State for search query and search results
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigation = useNavigation();
 
+  // Function to handle movie search
   const handleSearch = async () => {
     try {
+      // Fetch movies from API based on search query
       const response = await fetch(
         `${SEARCH_URL}?api_key=${API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
       );
